@@ -1,8 +1,8 @@
 namespace ERP_FRONT
 {
-    public partial class Form1 : Form
+    public partial class MainContainer : Form
     {
-        public Form1()
+        public MainContainer()
         {
             InitializeComponent();
         }
