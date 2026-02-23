@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+
 namespace ERP_FRONT
 {
     internal static class Program
@@ -8,10 +10,24 @@ namespace ERP_FRONT
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            var services = new ServiceCollection();
+
+            ConfigureServices(services);
+
+            using(ServiceProvider serviceProvider = services.BuildServiceProvider())
+            {
+                ApplicationConfiguration.Initialize();
+
+                var mainContainer = serviceProvider.GetRequiredService<MainContainer>();
+                
+                Application.Run(mainContainer);
+            }
+        }
+
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            //MainContainer
+            services.AddSingleton<MainContainer>();
         }
     }
 }
