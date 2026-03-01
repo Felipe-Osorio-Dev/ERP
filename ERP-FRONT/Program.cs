@@ -1,3 +1,6 @@
+using ERP_FRONT.Presenters;
+using ERP_FRONT.Services.Navigation;
+using ERP_FRONT.Views.Main;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ERP_FRONT
@@ -19,6 +22,7 @@ namespace ERP_FRONT
                 ApplicationConfiguration.Initialize();
 
                 var mainContainer = serviceProvider.GetRequiredService<MainContainer>();
+                serviceProvider.GetRequiredService<MainPresenter>();
                 
                 Application.Run(mainContainer);
             }
@@ -28,6 +32,17 @@ namespace ERP_FRONT
         {
             //MainContainer
             services.AddSingleton<MainContainer>();
+
+            //Interfaces
+            services.AddTransient<IMainForm>(sp => sp.GetRequiredService<MainContainer>());
+
+            //Forms
+
+            //Presenters
+            services.AddSingleton<MainPresenter>();
+
+            //Navigation
+            services.AddSingleton<INavigationService, NavigationService>();
         }
     }
 }
